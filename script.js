@@ -26,6 +26,7 @@ const starterBooks = [
     }
 ];
 
+//Local Storage Added
 const savedBooks = localStorage.getItem("books");
 
 let books;
@@ -51,6 +52,23 @@ const newAuthorInput =
 document.getElementById("newAuthorInput");
 const addBookButton = 
 document.getElementById("addBookButton");
+
+//Display Books on Screen
+function displayBooks() {
+
+    results.innerHTML = "";
+
+    for (const book of books) {
+
+        results.innerHTML += `
+            <h3>${book.title}</h3>
+            <p>Author: ${book.author}</p>
+            <hr>
+        `;
+
+    }
+
+}
 
 //Search Button Action
 searchButton.addEventListener("click", function () {
@@ -102,9 +120,11 @@ addBookButton.addEventListener("click", function () {
 
     books.push(newBook);
     localStorage.setItem("books", JSON.stringify(books));
+    displayBooks();
     console.log(books);
 
     newTitleInput.value = "";
     newAuthorInput.value = "";
 
 });
+displayBooks();
