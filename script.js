@@ -1,5 +1,5 @@
 //Book Array
-const books = [
+const starterBooks = [
     {
         title: "The Hobbit",
         author: "J.R.R. Tolkien"
@@ -25,6 +25,16 @@ const books = [
         author: "J.K. Rowling"
     }
 ];
+
+const savedBooks = localStorage.getItem("books");
+
+let books;
+
+if (savedBooks === null) {
+    books = starterBooks;
+} else {
+    books = JSON.parse(savedBooks);
+}
 
 //Variables for Searching Author and Book Title
 const authorInput = 
@@ -91,6 +101,7 @@ addBookButton.addEventListener("click", function () {
     };
 
     books.push(newBook);
+    localStorage.setItem("books", JSON.stringify(books));
     console.log(books);
 
     newTitleInput.value = "";
