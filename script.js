@@ -58,12 +58,19 @@ function displayBooks() {
 
     results.innerHTML = "";
 
-    for (const book of books) {
+    for (let i = 0; i < books.length; i++) {
+        const book = books[i];
 
         results.innerHTML += `
-            <h3>${book.title}</h3>
-            <p>Author: ${book.author}</p>
-            <hr>
+            <div class="book-card">
+                <h3>${book.title}</h3>
+                <p><strong>Author:</strong> ${book.author}</p>
+                <p><strong>⭐ Rating:</strong> Coming Soon</p>
+                <p><strong>📅 Last Read:</strong> Coming Soon</p>
+                <button onclick="deleteBook(${i})">
+                    🗑 Delete
+                </button>
+            </div>
         `;
 
     }
@@ -102,7 +109,7 @@ searchButton.addEventListener("click", function () {
 
 });
 
-//Add Book Button Action
+//Addde Book Button Action
 addBookButton.addEventListener("click", function () {
 
     let newTitle = newTitleInput.value.trim();
@@ -127,4 +134,15 @@ addBookButton.addEventListener("click", function () {
     newAuthorInput.value = "";
 
 });
+
+//Added Delete Book Action
+function deleteBook(index) {
+    let answer = confirm(`Are you sure you want to delete "${books[index].title}?"`);
+    if (answer) {
+        books.splice(index, 1);
+        localStorage.setItem("books", JSON.stringify(books));
+        displayBooks();
+    }
+    
+}
 displayBooks();
