@@ -54,12 +54,12 @@ const addBookButton =
 document.getElementById("addBookButton");
 
 //Display Books on Screen
-function displayBooks() {
+function displayBooks(bookArray) {
 
     results.innerHTML = "";
 
-    for (let i = 0; i < books.length; i++) {
-        const book = books[i];
+    for (let i = 0; i < bookArray.length; i++) {
+        const book = bookArray[i];
 
         results.innerHTML += `
             <div class="book-card">
@@ -67,7 +67,7 @@ function displayBooks() {
                 <p><strong>Author:</strong> ${book.author}</p>
                 <p><strong>⭐ Rating:</strong> Coming Soon</p>
                 <p><strong>📅 Last Read:</strong> Coming Soon</p>
-                <button onclick="deleteBook(${i})">
+                <button onclick="deleteBook(${books.indexOf(book)})">
                     🗑 Delete
                 </button>
             </div>
@@ -80,36 +80,41 @@ function displayBooks() {
 //Search Button Action
 searchButton.addEventListener("click", function () {
 
+    let foundBooks = [];
     let foundBook = false;
 
-    results.innerHTML = `
-        <h3>Searching for:</h3>
-        <p>${authorInput.value}</p>
-    `;
-
     for (const book of books) {
-        if(authorInput.value.trim().toLowerCase() === 
+
+        if (
+            authorInput.value.trim().toLowerCase() ===
             book.author.toLowerCase()
         ) {
+
             foundBook = true;
 
-            results.innerHTML += `
-                <p>${book.title}</p>
-            `;
+            foundBooks.push(book);
 
         }
 
     }
 
+    if (foundBook) {
+
+        displayBooks(foundBooks);
+
+    }
+
     if (!foundBook) {
-        results.innerHTML += `
+
+        results.innerHTML = `
             <p>No books found.</p>
         `;
+
     }
 
 });
 
-//Addde Book Button Action
+//Add Book Button Action
 addBookButton.addEventListener("click", function () {
 
     let newTitle = newTitleInput.value.trim();
@@ -127,22 +132,22 @@ addBookButton.addEventListener("click", function () {
 
     books.push(newBook);
     localStorage.setItem("books", JSON.stringify(books));
-    displayBooks();
-    console.log(books);
-
+    displayBooks(books);
     newTitleInput.value = "";
     newAuthorInput.value = "";
 
 });
 
-//Added Delete Book Action
+//Delete Book Function
 function deleteBook(index) {
-    let answer = confirm(`Are you sure you want to delete "${books[index].title}?"`);
+    let answer = confirm(`Are you sure you want to delete "${books[index].title}"?`);
     if (answer) {
         books.splice(index, 1);
         localStorage.setItem("books", JSON.stringify(books));
-        displayBooks();
+        //Display Library When Website Loads
+        displayBooks(books);
     }
     
 }
-displayBooks();
+//Display Library When Website Loads
+displayBooks(books);
