@@ -52,6 +52,8 @@ const newAuthorInput =
 document.getElementById("newAuthorInput");
 const newRatingInput =
 document.getElementById("newRatingInput");
+const newLastReadInput =
+document.getElementById("newLastReadInput");
 const addBookButton = 
 document.getElementById("addBookButton");
 
@@ -63,12 +65,25 @@ function displayBooks(bookArray) {
     for (let i = 0; i < bookArray.length; i++) {
         const book = bookArray[i];
 
+        let formattedDate = "Not Recorded";
+
+        if (book.lastRead) {
+            formattedDate = new Date(book.lastRead).toLocaleDateString(
+                "en-US",
+                {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                }
+            );
+    }
+
         results.innerHTML += `
             <div class="book-card">
                 <h3>${book.title}</h3>
                 <p><strong>Author:</strong> ${book.author}</p>
                 <p><strong>⭐ Rating:</strong> ${book.rating}/5</p>
-                <p><strong>📅 Last Read:</strong> Coming Soon</p>
+                <p><strong>📅 Last Read:</strong> ${formattedDate}</p>
                 <button onclick="deleteBook(${books.indexOf(book)})">
                     🗑 Delete
                 </button>
@@ -122,6 +137,7 @@ addBookButton.addEventListener("click", function () {
     let newTitle = newTitleInput.value.trim();
     let newAuthor = newAuthorInput.value.trim();
     let newRating = Number(newRatingInput.value);
+    let newLastRead = newLastReadInput.value;
 
     if (newTitle === "" || newAuthor === "") {
         alert("Please enter both a title and an author.");
@@ -131,7 +147,8 @@ addBookButton.addEventListener("click", function () {
     let newBook = {
         title: newTitle,
         author: newAuthor,
-        rating: newRating
+        rating: newRating,
+        lastRead: newLastRead 
     };
 
     books.push(newBook);
@@ -140,6 +157,7 @@ addBookButton.addEventListener("click", function () {
     newTitleInput.value = "";
     newAuthorInput.value = "";
     newRatingInput.value = "";
+    newLastReadInput.value = "";
 
 });
 
