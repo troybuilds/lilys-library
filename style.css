@@ -116,3 +116,32 @@ button:hover {
     margin: 6px 0;
 
 }
+
+/* ==========================
+   FlexBox
+========================== */
+
+.top-section {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+}
+
+.search-section,
+.add-section {
+
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    box-shadow: 0px 4px 10px rgba(0,0,0,.1);
+
+    flex: 1;
+
+}

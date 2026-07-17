@@ -50,6 +50,8 @@ const newTitleInput =
 document.getElementById("newTitleInput");
 const newAuthorInput = 
 document.getElementById("newAuthorInput");
+const newRatingInput =
+document.getElementById("newRatingInput");
 const addBookButton = 
 document.getElementById("addBookButton");
 
@@ -65,7 +67,7 @@ function displayBooks(bookArray) {
             <div class="book-card">
                 <h3>${book.title}</h3>
                 <p><strong>Author:</strong> ${book.author}</p>
-                <p><strong>⭐ Rating:</strong> Coming Soon</p>
+                <p><strong>⭐ Rating:</strong> ${book.rating}/5</p>
                 <p><strong>📅 Last Read:</strong> Coming Soon</p>
                 <button onclick="deleteBook(${books.indexOf(book)})">
                     🗑 Delete
@@ -119,6 +121,7 @@ addBookButton.addEventListener("click", function () {
 
     let newTitle = newTitleInput.value.trim();
     let newAuthor = newAuthorInput.value.trim();
+    let newRating = Number(newRatingInput.value);
 
     if (newTitle === "" || newAuthor === "") {
         alert("Please enter both a title and an author.");
@@ -127,7 +130,8 @@ addBookButton.addEventListener("click", function () {
 
     let newBook = {
         title: newTitle,
-        author: newAuthor
+        author: newAuthor,
+        rating: newRating
     };
 
     books.push(newBook);
@@ -135,6 +139,7 @@ addBookButton.addEventListener("click", function () {
     displayBooks(books);
     newTitleInput.value = "";
     newAuthorInput.value = "";
+    newRatingInput.value = "";
 
 });
 

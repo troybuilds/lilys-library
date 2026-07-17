@@ -14,32 +14,50 @@
 
     <p class="subtitle">
         A cozy place to keep track of every adventure you've read❤️.
+    </p>
 
-    <h2>Search by Author</h2>
-    
-    <input type="text" 
-    id="authorInput"
-    placeholder="Enter an author's name">
+<div class="top-section">
 
-    <button id="searchButton">
-        Search
-    </button>
+    <div class="search-section">
 
-    <h2>Add a Book</h2>
+        <h2>Search by Author</h2>
 
-    <p>Add new books to your library here</p>
+        <input type="text"
+        id="authorInput"
+        placeholder="Enter an author's name">
 
-    <input type="text"
-    id="newTitleInput"
-    placeholder="Enter the Title of the Book">
+        <button id="searchButton">
+            Search
+        </button>
 
-    <input type="text"
-    id="newAuthorInput"
-    placeholder="Enter the Author's Name">
+    </div>
 
-    <button id="addBookButton">
-        Add Book
-    </button>
+    <div class="add-section">
+
+        <h2>Add a Book</h2>
+
+        <input type="text"
+        id="newTitleInput"
+        placeholder="Enter the Title of the Book">
+
+        <input type="text"
+        id="newAuthorInput"
+        placeholder="Enter the Author's Name">
+
+        <input
+        type="number"
+        id="newRatingInput"
+        placeholder="Enter a Rating (1-5)"
+        min="1"
+        max="5">
+
+        <button id="addBookButton">
+            Add Book
+        </button>
+
+    </div>
+
+</div>
 
     <h2>Results</h2>
 
