@@ -2,27 +2,45 @@
 const starterBooks = [
     {
         title: "The Hobbit",
-        author: "J.R.R. Tolkien"
+        author: "J.R.R. Tolkien",
+        rating: 5,
+        lastRead: "2026-05-9",
+        favorite: false
     },
     {
         title: "The Fellowship of the Ring",
-        author: "J.R.R. Tolkien"
+        author: "J.R.R. Tolkien",
+        rating: 2,
+        lastRead: "2026-06-024",
+        favorite: false
     },
     {
-        title: "The two Towers",
-        author: "J.R.R. Tolkien"
+        title: "The Two Towers",
+        author: "J.R.R. Tolkien",
+        rating: 4,
+        lastRead: "2026-07-01",
+        favorite: false
     },
     {
         title: "Mistborn",
-        author: "Brandon Sanderson"
+        author: "Brandon Sanderson",
+        rating: 5,
+        lastRead: "2026-04-05",
+        favorite: false
     },
     {
         title: "The Final Empire",
-        author: "Brandon Sanderson"
+        author: "Brandon Sanderson",
+        rating: 2,
+        lastRead: "2026-03-017",
+        favorite: false
     },
     {
         title: "Harry Potter and the Sorcerer's Stone",
-        author: "J.K. Rowling"
+        author: "J.K. Rowling",
+        rating: 3,
+        lastRead: "2026-05-014",
+        favorite: false
     }
 ];
 
@@ -65,6 +83,8 @@ function displayBooks(bookArray) {
     for (let i = 0; i < bookArray.length; i++) {
         const book = bookArray[i];
 
+        let favoriteDisplay = book.favorite ? "❤️" : "🤍";
+
         let formattedDate = "Not Recorded";
 
         if (book.lastRead) {
@@ -84,9 +104,8 @@ function displayBooks(bookArray) {
                 <p><strong>Author:</strong> ${book.author}</p>
                 <p><strong>⭐ Rating:</strong> ${book.rating}/5</p>
                 <p><strong>📅 Last Read:</strong> ${formattedDate}</p>
-                <button onclick="deleteBook(${books.indexOf(book)})">
-                    🗑 Delete
-                </button>
+                <button onclick="toggleFavorite(${i})">${favoriteDisplay}</button>
+                <button onclick="deleteBook(${books.indexOf(book)})">🗑 Delete</button>
             </div>
         `;
 
@@ -148,7 +167,8 @@ addBookButton.addEventListener("click", function () {
         title: newTitle,
         author: newAuthor,
         rating: newRating,
-        lastRead: newLastRead 
+        lastRead: newLastRead,
+        favorite: false 
     };
 
     books.push(newBook);
@@ -172,5 +192,15 @@ function deleteBook(index) {
     }
     
 }
+
+//Toggle Favorite Book
+function toggleFavorite(index) {
+    books[index].favorite = !books[index].favorite;
+
+    localStorage.setItem("books", JSON.stringify(books));
+
+    displayBooks(books);
+}
+
 //Display Library When Website Loads
 displayBooks(books);
