@@ -3,43 +3,49 @@ const starterBooks = [
     {
         title: "The Hobbit",
         author: "J.R.R. Tolkien",
+        series: "Middle-earth", 
         rating: 5,
-        lastRead: "2026-05-9",
+        lastRead: "2026-05-09",
         favorite: false
     },
     {
         title: "The Fellowship of the Ring",
         author: "J.R.R. Tolkien",
+        series: "The Lord of the Rings",
         rating: 2,
-        lastRead: "2026-06-024",
+        lastRead: "2026-06-24",
         favorite: false
     },
     {
         title: "The Two Towers",
         author: "J.R.R. Tolkien",
+        series: "The Lord of the Rings",
         rating: 4,
         lastRead: "2026-07-01",
         favorite: false
     },
     {
-        title: "Mistborn",
+        title: "The Well of Ascension",
         author: "Brandon Sanderson",
-        rating: 5,
-        lastRead: "2026-04-05",
+        series: "Mistborn Era 1",
+        rating: 4,
+        lastRead: "2026-03-17",
         favorite: false
     },
     {
         title: "The Final Empire",
         author: "Brandon Sanderson",
+        series: "Mistborn Era 1",
         rating: 2,
-        lastRead: "2026-03-017",
+        lastRead: "2026-03-17",
         favorite: false
     },
     {
         title: "Harry Potter and the Sorcerer's Stone",
         author: "J.K. Rowling",
+        series: "Harry Potter",
         rating: 3,
-        lastRead: "2026-05-014",
+        lastRead: "2026-05-14",
         favorite: false
     }
 ];
@@ -55,7 +61,7 @@ if (savedBooks === null) {
     books = JSON.parse(savedBooks);
 }
 
-//Variables for Searching Author and Book Title
+// Variables for Searching by Author, Title, or Series
 const authorInput = 
 document.getElementById("authorInput");
 const searchButton = 
@@ -125,11 +131,14 @@ searchButton.addEventListener("click", function () {
     let foundBooks = [];
     let foundBook = false;
 
+    let searchText = authorInput.value.trim().toLowerCase();
+
     for (const book of books) {
 
         if (
-            authorInput.value.trim().toLowerCase() ===
-            book.author.toLowerCase()
+            book.author.toLowerCase().includes(searchText) ||
+            book.title.toLowerCase().includes(searchText) ||
+            book.series.toLowerCase().includes(searchText)
         ) {
 
             foundBook = true;
@@ -144,9 +153,7 @@ searchButton.addEventListener("click", function () {
 
         displayBooks(foundBooks);
 
-    }
-
-    if (!foundBook) {
+    } else {
 
         results.innerHTML = `
             <p>No books found.</p>
