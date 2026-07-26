@@ -68,6 +68,8 @@ const newTitleInput =
 document.getElementById("newTitleInput");
 const newAuthorInput = 
 document.getElementById("newAuthorInput");
+const newSeriesInput = 
+document.getElementById("newSeriesInput");
 const newRatingInput =
 document.getElementById("newRatingInput");
 const newLastReadInput =
@@ -84,6 +86,9 @@ function displayBooks(bookArray) {
         const book = bookArray[i];
 
         let favoriteDisplay = book.favorite ? "❤️" : "🤍";
+
+        let seriesDisplay =
+            book.series === "" ? "Standalone" : book.series;
 
         let formattedDate = "Not Recorded";
 
@@ -102,6 +107,7 @@ function displayBooks(bookArray) {
             <div class="book-card">
                 <h3>${book.title}</h3>
                 <p><strong>Author:</strong> ${book.author}</p>
+                <p><strong>Series:</strong> ${seriesDisplay}</p>
                 <p><strong>⭐ Rating:</strong> ${book.rating}/5</p>
                 <p><strong>📅 Last Read:</strong> ${formattedDate}</p>
                 <button onclick="toggleFavorite(${i})">${favoriteDisplay}</button>
@@ -155,6 +161,7 @@ addBookButton.addEventListener("click", function () {
 
     let newTitle = newTitleInput.value.trim();
     let newAuthor = newAuthorInput.value.trim();
+    let newSeries = newSeriesInput.value.trim();
     let newRating = Number(newRatingInput.value);
     let newLastRead = newLastReadInput.value;
 
@@ -166,6 +173,7 @@ addBookButton.addEventListener("click", function () {
     let newBook = {
         title: newTitle,
         author: newAuthor,
+        series: newSeries,
         rating: newRating,
         lastRead: newLastRead,
         favorite: false 
@@ -176,6 +184,7 @@ addBookButton.addEventListener("click", function () {
     displayBooks(books);
     newTitleInput.value = "";
     newAuthorInput.value = "";
+    newSeriesInput.value = "";
     newRatingInput.value = "";
     newLastReadInput.value = "";
 
