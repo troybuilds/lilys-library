@@ -54,6 +54,7 @@ const starterBooks = [
 const savedBooks = localStorage.getItem("books");
 
 let books;
+let editingBookIndex = null;
 
 if (savedBooks === null) {
     books = starterBooks;
@@ -82,6 +83,8 @@ const newLastReadInput =
 document.getElementById("newLastReadInput");
 const addBookButton = 
 document.getElementById("addBookButton");
+const cancelButton =
+document.getElementById("cancelButton");
 
 //Display Books on Screen
 function displayBooks(bookArray) {
@@ -116,7 +119,8 @@ function displayBooks(bookArray) {
                 <p><strong>Series:</strong> ${seriesDisplay}</p>
                 <p><strong>⭐ Rating:</strong> ${book.rating}/5</p>
                 <p><strong>📅 Last Read:</strong> ${formattedDate}</p>
-                <button onclick="toggleFavorite(${i})">${favoriteDisplay}</button>
+                <button onclick="toggleFavorite(${books.indexOf(book)})">${favoriteDisplay}</button>
+                <button onclick="editBook(${books.indexOf(book)})">✏️ Edit</button>
                 <button onclick="deleteBook(${books.indexOf(book)})">🗑 Delete</button>
             </div>
         `;
@@ -177,18 +181,37 @@ addBookButton.addEventListener("click", function () {
         return;
     }
 
-    let newBook = {
-        title: newTitle,
-        author: newAuthor,
-        series: newSeries,
-        rating: newRating,
-        lastRead: newLastRead,
-        favorite: false 
-    };
+    if (editingBookIndex === null) {
 
-    books.push(newBook);
+        let newBook = {
+            title: newTitle,
+            author: newAuthor,
+            series: newSeries,
+            rating: newRating,
+            lastRead: newLastRead,
+            favorite: false
+        };
+
+        books.push(newBook);
+
+    } else {
+
+        books[editingBookIndex].title = newTitle;
+        books[editingBookIndex].author = newAuthor;
+        books[editingBookIndex].series = newSeries;
+        books[editingBookIndex].rating = newRating;
+        books[editingBookIndex].lastRead = newLastRead;
+
+        editingBookIndex = null;
+
+        addBookButton.textContent = "Add Book";
+
+    }
+    cancelButton.style.display = "none";
+
     localStorage.setItem("books", JSON.stringify(books));
     displayBooks(books);
+
     newTitleInput.value = "";
     newAuthorInput.value = "";
     newSeriesInput.value = "";
@@ -217,6 +240,38 @@ function toggleFavorite(index) {
 
     displayBooks(books);
 }
+
+//Edit Book Function
+function editBook(index) {
+
+    editingBookIndex = index;
+
+    newTitleInput.value = books[index].title;
+    newAuthorInput.value = books[index].author;
+    newSeriesInput.value = books[index].series;
+    newRatingInput.value = books[index].rating;
+    newLastReadInput.value = books[index].lastRead;
+
+    addBookButton.textContent= "Save Changes";
+    cancelButton.style.display = "inline-block";
+}
+
+//Cancel Edit Feature
+cancelButton.addEventListener("click", function () {
+
+    editingBookIndex = null;
+
+    newTitleInput.value = "";
+    newAuthorInput.value = "";
+    newSeriesInput.value = "";
+    newRatingInput.value = "";
+    newLastReadInput.value = "";
+
+    addBookButton.textContent = "Add Book";
+
+    cancelButton.style.display = "none";
+
+});
 
 //Display Library When Website Loads
 displayBooks(books);
