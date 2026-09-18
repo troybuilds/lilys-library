@@ -85,6 +85,8 @@ const addBookButton =
 document.getElementById("addBookButton");
 const cancelButton =
 document.getElementById("cancelButton");
+const newGenreInput =
+document.getElementById("newGenreInput");
 
 //Display Books on Screen
 function displayBooks(bookArray) {
@@ -117,6 +119,7 @@ function displayBooks(bookArray) {
                 <h3>${book.title}</h3>
                 <p><strong>Author:</strong> ${book.author}</p>
                 <p><strong>Series:</strong> ${seriesDisplay}</p>
+                <p><strong>Genre:</strong> ${book.genre}</p>
                 <p><strong>⭐ Rating:</strong> ${book.rating}/5</p>
                 <p><strong>📅 Last Read:</strong> ${formattedDate}</p>
                 <button onclick="toggleFavorite(${books.indexOf(book)})">${favoriteDisplay}</button>
@@ -175,6 +178,7 @@ addBookButton.addEventListener("click", function () {
     let newSeries = newSeriesInput.value.trim();
     let newRating = Number(newRatingInput.value);
     let newLastRead = newLastReadInput.value;
+    let newGenre = newGenreInput.value;
 
     if (newTitle === "" || newAuthor === "") {
         alert("Please enter both a title and an author.");
@@ -187,6 +191,7 @@ addBookButton.addEventListener("click", function () {
             title: newTitle,
             author: newAuthor,
             series: newSeries,
+            genre: newGenre,
             rating: newRating,
             lastRead: newLastRead,
             favorite: false
@@ -201,6 +206,7 @@ addBookButton.addEventListener("click", function () {
         books[editingBookIndex].series = newSeries;
         books[editingBookIndex].rating = newRating;
         books[editingBookIndex].lastRead = newLastRead;
+        books[editingBookIndex].genre = newGenre;
 
         editingBookIndex = null;
 
@@ -217,6 +223,7 @@ addBookButton.addEventListener("click", function () {
     newSeriesInput.value = "";
     newRatingInput.value = "";
     newLastReadInput.value = "";
+    newGenreInput.value = "";
 
 });
 
@@ -251,6 +258,7 @@ function editBook(index) {
     newSeriesInput.value = books[index].series;
     newRatingInput.value = books[index].rating;
     newLastReadInput.value = books[index].lastRead;
+    newGenreInput.value = books[index].genre;
 
     addBookButton.textContent= "Save Changes";
     cancelButton.style.display = "inline-block";
@@ -266,6 +274,7 @@ cancelButton.addEventListener("click", function () {
     newSeriesInput.value = "";
     newRatingInput.value = "";
     newLastReadInput.value = "";
+    newGenreInput.value = "";
 
     addBookButton.textContent = "Add Book";
 
